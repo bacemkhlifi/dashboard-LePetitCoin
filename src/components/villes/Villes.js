@@ -127,14 +127,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-class Category extends Component {
+class Villes extends Component {
 
 
 componentDidMount() {
 
   
-   axios.get("http://localhost:8089/v1/categories")
-          .then((response) => this.setState({categories:response.data}));
+   axios.get("http://localhost:8089/v1/villes")
+          .then((response) => this.setState({villes:response.data}));
         
 }
 
@@ -142,9 +142,9 @@ componentDidMount() {
     super()
     this.state = {
        name:"",
-       subcat:"",
+       region:"",
         error: null,
-        categories:[],
+        villes:[],
         loading: false
     };
 }
@@ -174,7 +174,7 @@ handleAdd = event => {
         
           
       };
-      fetch ('http://localhost:8089/v1/new/category', {
+      fetch ('http://localhost:8089/v1/new/ville', {
           method  : 'POST',
           headers : {'Content-Type': 'application/json' } , 
           body : JSON.stringify(regesterData),
@@ -199,8 +199,8 @@ handleAdd = event => {
 
   render(){
     const { classes } = this.props;
-    const {categories}= this.state
-  const {subcat} = this.state
+    const {villes}= this.state
+  const {region} = this.state
     const { name } = this.state;
   
 
@@ -237,22 +237,22 @@ handleAdd = event => {
       <Table aria-label="collapsible table" style={{"marginTop":"90px"}}>
         <TableHead>
           <TableRow>
-            <TableCell  ><Typography variant="h6">Catégories</Typography> </TableCell>
-            <TableCell  > <Typography variant="h6">Sous-catégories</Typography></TableCell>
+            <TableCell  ><Typography variant="h6">Villes</Typography> </TableCell>
+            <TableCell  > <Typography variant="h6">Région</Typography></TableCell>
             <TableCell  > <Typography variant="h6">Gérer</Typography></TableCell>
          
            
           </TableRow>
         </TableHead>
         <TableBody>
-        {categories.map((row) => (
+        {villes.map((row) => (
             <TableRow key={row.id_cat}>
               <TableCell>{row.name}</TableCell>
               
               <TableBody> 
                
-        {row.subCategory.map((row) => (
-            <TableRow key={row.id_subcat}>
+        {row.region.map((row) => (
+            <TableRow key={row.id_region}>
               <TableCell>{row.name}</TableCell>
               
             </TableRow>
@@ -262,21 +262,23 @@ handleAdd = event => {
           ))} 
          </TableBody>
          <div>
-         <TextField   onChange={this.handleOnchange}
-                name="subcat"
-                value={subcat} id="outlined-basic"
-              label="Sous-Catégorie" 
-  /> 
-           <Button color='primary'  variant="contained" 
-           onClick={  ()=>{
-          axios.post('http://localhost:8089/v1/new/subcategory/'+row.id_cat,{
-            "name":this.state.subcat
+             <form onSubmit={ ()=>{
+          axios.post('http://localhost:8089/v1/new/region/'+row.id_ville,{
+            "name":this.state.region
           })
         .then(response => console.log(response.data))
         window.location.reload(); 
-        }}>Ajouter</Button> 
-        </div>
+        }}>
+         <TextField   onChange={this.handleOnchange}
+                name="region"
+                value={region} id="outlined-basic"
+              label="Région" 
+  /> 
+           <Button color='primary'  type="submit" variant="contained" 
+           >Ajouter</Button> 
         
+        </form>
+        </div>
             </TableRow>
             
           ))} 
@@ -291,11 +293,11 @@ handleAdd = event => {
         
             
      <form  onSubmit={this.handleAdd}>
-  <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>Ajouter une nouvelle catégorie</Typography>
+  <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>Ajouter une nouvelle ville</Typography>
  <TextField   onChange={this.handleOnchange}
   name="name"
   value={name} id="outlined-basic" 
- label="Catégorie" variant="outlined"
+ label="Ville" variant="outlined"
   /> 
  <Button type="submit" color='primary'  variant="contained">Ajouter</Button>
  </form>
@@ -309,4 +311,4 @@ handleAdd = event => {
     </>
   );
 }}
-export default withStyles(useStyles) (Category);
+export default withStyles(useStyles) (Villes);

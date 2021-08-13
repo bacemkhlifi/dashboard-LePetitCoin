@@ -5,6 +5,7 @@ import Login from './components/login/Login';
 import User from './components/users/User';
 import Adsence from './components/adsences/Adsence';
 import Categories from './components/categories/Category'
+import Villes from './components/villes/Villes'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
     <Route exact path="/users" component={User}></Route>
     <Route exact path="/annonces" component={Adsence}></Route>
     <Route exact path="/categories" component={Categories}></Route>
+    <Route exact path="/villes" component={Villes}></Route>
     
     </Switch>
     

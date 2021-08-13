@@ -46,6 +46,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Catégories" />
     </ListItem>
+    <ListItem button component={Link} to={"/villes"}>
+      <ListItemIcon>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="Villes" />
+    </ListItem>
   </div>
 );
 
