@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Button} from '@material-ui/core';
-import Link from '@material-ui/core/Link';
+import { Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -54,15 +54,19 @@ console.log(nmbAds)
         </TableHead>
         <TableBody>
           {nmbAds.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow key={row._ad}>
               <TableCell>{row.date}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.emplacement}</TableCell>
               <TableCell>{row.price}</TableCell>
               <TableCell align="center"><Button color='primary' variant="contained">valider</Button>
-              <Button onClick={() => axios.post("http://localhost:8089/v1/annonce/delete/"+row.id)} 
+              <Button onClick={()=>{axios.post("http://localhost:8089/v1/annonce/delete/"+row.id_ad)
+         window.location.reload()}} 
               color='secondary' variant="contained">supprimer</Button>
-              <Button  variant="contained">voir</Button></TableCell>
+              <Button href={"http://localhost:3000/annonce/"+row.id_ad}    variant="contained"> 
+              
+             
+              voir</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

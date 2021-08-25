@@ -6,6 +6,7 @@ import User from './components/users/User';
 import Adsence from './components/adsences/Adsence';
 import Categories from './components/categories/Category'
 import Villes from './components/villes/Villes'
+import ReadProduct from './components/dashboard/ReadProduct'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
     <Route exact path="/dashboard"component={Dashboard} />
     <Route exact path="/users" component={User}></Route>
     <Route exact path="/annonces" component={Adsence}></Route>
+    <Route exact path="/ad" component={ReadProduct}></Route>
     <Route exact path="/categories" component={Categories}></Route>
     <Route exact path="/villes" component={Villes}></Route>
     
