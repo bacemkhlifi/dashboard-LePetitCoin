@@ -21,14 +21,13 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
+
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../dashboard/listItems';
 
-import Deposits from '../dashboard/Deposits';
-import Orders from '../dashboard/Orders';
+import { Link} from 'react-router-dom'
 
 const useRowStyles = makeStyles({
     root: {
@@ -252,7 +251,12 @@ export default function User() {
     })
 
 },[]);
-console.log(nmbAds)
+const [reclamation, setreclamation] = useState([])
+useEffect(async() => {
+  await  axios.get("http://localhost:8089/v1/reclamations").then((res)=>setreclamation(res.data))
+ 
+
+  }, [reclamation])
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -270,8 +274,10 @@ console.log(nmbAds)
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Tableau de bord LePetitCoin
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+          <IconButton color="inherit"
+          component={Link} to={"/reclamations"}
+          >
+            <Badge badgeContent={reclamation.length} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>

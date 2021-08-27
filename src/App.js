@@ -7,6 +7,7 @@ import Adsence from './components/adsences/Adsence';
 import Categories from './components/categories/Category'
 import Villes from './components/villes/Villes'
 import ReadProduct from './components/dashboard/ReadProduct'
+import reclamations from './components/reclamations/reclamations';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
     <Route exact path="/ad" component={ReadProduct}></Route>
     <Route exact path="/categories" component={Categories}></Route>
     <Route exact path="/villes" component={Villes}></Route>
-    
+    <Route exact path="/reclamations" component={reclamations}></Route>
     </Switch>
     
   </Router>

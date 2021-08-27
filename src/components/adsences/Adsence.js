@@ -1,5 +1,6 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import clsx from 'clsx';
+import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -14,7 +15,7 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
+import { Link} from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -119,7 +120,13 @@ export default function Adsence() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  const [reclamation, setreclamation] = useState([])
+ 
+  useEffect(async() => {
+    await  axios.get("http://localhost:8089/v1/reclamations").then((res)=>setreclamation(res.data))
+   
+  
+    }, [reclamation])
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -137,8 +144,10 @@ export default function Adsence() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Tableau de bord LePetitCoin
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+          <IconButton color="inherit"
+          component={Link} to={"/reclamations"}
+          >
+            <Badge badgeContent={reclamation.length} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>

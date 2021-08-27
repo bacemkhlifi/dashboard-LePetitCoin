@@ -34,12 +34,7 @@ export const mainListItems = (
       
     </ListItem>
    
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Rapports" />
-    </ListItem>
+   
     <ListItem button component={Link} to={"/categories"}>
       <ListItemIcon>
         <LayersIcon />
@@ -51,6 +46,12 @@ export const mainListItems = (
         <LayersIcon />
       </ListItemIcon>
       <ListItemText primary="Villes" />
+    </ListItem>
+    <ListItem button component={Link} to={"/reclamations"}>
+      <ListItemIcon>
+      <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Reclamations" />
     </ListItem>
   </div>
 );

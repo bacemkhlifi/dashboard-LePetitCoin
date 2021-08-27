@@ -1,7 +1,8 @@
+
+
+
 import React,{useEffect,useState} from 'react';
 import clsx from 'clsx';
-import axios from 'axios'
-import { Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -9,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+import {Typography,ListItem,ListItemText,Card, CardContent} from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
@@ -20,19 +21,22 @@ import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
+import { mainListItems, secondaryListItems } from '../dashboard/listItems';
+import axios from 'axios';
+import { Link} from 'react-router-dom'
 
 
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
+    root: {
+        width: '100%',
+        
+        backgroundColor: theme.palette.background.paper,
+        display: 'flex',
+      },
+ 
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
   },
@@ -109,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Dashboard() {
+export default function Reclamations() {
  
   
   const classes = useStyles();
@@ -121,13 +125,24 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
   const [reclamation, setreclamation] = useState([])
- 
+  const [message, setmessage] = useState({})
   useEffect(async() => {
     await  axios.get("http://localhost:8089/v1/reclamations").then((res)=>setreclamation(res.data))
    
   
     }, [reclamation])
+    useEffect(async() => {
+       await  axios.get("http://localhost:8089/v1/reclamation/"+selectedIndex).then((res)=>setmessage(res.data))
+    
+      
+        }, [message])
+ 
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -174,29 +189,50 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-        
-          </Box>
+         <Grid container>
+            <Grid item lg={3} >
+          
+      <Divider />
+      
+      <List component="nav" aria-label="secondary mailbox folder">
+       {reclamation.map((rec)=>( 
+       <ListItem
+          button
+          selected={selectedIndex === rec.id_reclamation}
+          onClick={(event) => handleListItemClick(event,rec.id_reclamation )}
+        >
+          <ListItemText primary={rec.email} />
+        </ListItem>
+        ))}
+      </List>
+                
+                
+                 </Grid>
+
+            <Grid item  >
+                <Card>
+                    <CardContent  style={{  "minWidth": "750px",
+                                            "minHeight":"70vh"}}>
+                        <Typography variant="h6"
+                        style={{}}
+                        >Réclamation </Typography>
+                            <p>Message : {message.message}</p>
+
+
+                         <Typography variant="subtitle"
+                        style={{}}
+                        >Téléphone : {message.phone} </Typography>  
+                    </CardContent>
+
+                </Card>
+                
+                
+                </Grid>     
+             
+        </Grid> 
+            
+          
+         
         </Container>
       </main>
     </div>
