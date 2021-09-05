@@ -131,7 +131,9 @@ export default function Reclamations() {
     setSelectedIndex(index);
   };
   const [reclamation, setreclamation] = useState([])
-  const [message, setmessage] = useState({})
+  const [message, setmessage] = useState({
+      
+  })
   useEffect(async() => {
     await  axios.get("http://localhost:8089/v1/reclamations").then((res)=>setreclamation(res.data))
    
@@ -218,10 +220,13 @@ export default function Reclamations() {
                         >Réclamation </Typography>
                             <p>Message : {message.message}</p>
 
-
+                            <Typography variant="subtitle"
+                        style={{}}
+                        >Type réclamation : {message.type} </Typography>  
                          <Typography variant="subtitle"
                         style={{}}
-                        >Téléphone : {message.phone} </Typography>  
+                        >Téléphone : {message.phone} </Typography> 
+
                     </CardContent>
 
                 </Card>
